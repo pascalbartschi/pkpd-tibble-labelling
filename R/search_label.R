@@ -1,9 +1,15 @@
  # This function allows to search for a label
 
-search_label <- function(var){
+search_label <- function(var, mode = "remote"){
   tryCatch({
     var <- toupper(var)
-    labels <- read_labels()
+    
+    if (mode == "remote"){
+      labels <- read.csv("https://raw.githubusercontent.com/pascalbartschi/pkpd-tibble-labelling/main/output/all_variables2labels.csv")
+    } else {
+      labels <- read_labels(path = "data")
+    }
+    
     if (var %in% names(labels)) {
       print(labels[var])
     } else if (is.null(label)){
